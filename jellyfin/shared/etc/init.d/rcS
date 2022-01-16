@@ -1,0 +1,20 @@
+#!/bin/sh
+CONF=/etc/config/qpkg.conf
+QPKG_NAME="Jellyfin_HD"
+INSTALL_PATH=`/sbin/getcfg -f $CONF $QPKG_NAME Install_Path`
+
+# iff invoked inside CHROOT environment
+[ -z "$CHROOT_DIR" -o -z "$QPKG_CLASS" ] && exit 1
+
+ENABLED=$(/sbin/getcfg $QPKG_NAME Enable -u -d FALSE -f $CONF)
+if [ "$ENABLED" != "TRUE" ]; then
+    echo "$QPKG_NAME is disabled."
+    exit 1
+fi
+
+[ -d /opt/startup_shell ] || mkdir -p /opt/startup_shell
+ln -sf "$INSTALL_PATH/opt/startup_shell/startup_${QPKG_NAME}.sh" /opt/startup_shell/startup_${QPKG_NAME}.sh
+ln -sf "$INSTALL_PATH/opt/startup_shell/stop_${QPKG_NAME}.sh" /opt/startup_shell/stop_${QPKG_NAME}.sh
+
+[ -e "$HOME/.config/chrome-user-data-dir/$QPKG_NAME" ] && rm -rf "$HOME/.config/chrome-user-data-dir/$QPKG_NAME"
+ln -sf "$INSTALL_PATH/user-data-dir" "$HOME/.config/chrome-user-data-dir/$QPKG_NAME"

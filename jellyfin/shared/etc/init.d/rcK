@@ -1,0 +1,14 @@
+#!/bin/sh
+CONF=/etc/config/qpkg.conf
+QPKG_NAME="Jellyfin_HD"
+INSTALL_PATH=`/sbin/getcfg -f $CONF $QPKG_NAME Install_Path`
+
+# iff invoked inside CHROOT environment
+[ -z "$CHROOT_DIR" -o -z "$QPKG_CLASS" ] && exit 1
+
+#killall chrome
+[ -f /tmp/${QPKG_CLASS}-${QPKG_NAME}.pid ] && kill $(cat /tmp/${QPKG_CLASS}-${QPKG_NAME}.pid) && sleep 1
+
+[ -L "/opt/startup_shell/startup_${QPKG_NAME}.sh" ] && rm -f "/opt/startup_shell/startup_${QPKG_NAME}.sh"
+[ -L "/opt/startup_shell/stop_${QPKG_NAME}.sh" ] && rm -f "/opt/startup_shell/stop_${QPKG_NAME}.sh"
+[ -L "$HOME/.config/chrome-user-data-dir/$QPKG_NAME" ] && rm -f "$HOME/.config/chrome-user-data-dir/$QPKG_NAME"

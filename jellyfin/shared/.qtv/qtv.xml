@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<QTV>
+        <name>Jellyfin</name>
+		<arch>x86_64</arch>
+        <base>ubuntu-14.04</base>
+        <type>application</type>
+        <start>/opt/startup_shell/startup_Jellyfin_HD.sh</start>
+        <stop>/opt/startup_shell/stop_Jellyfin_HD.sh</stop>
+        <needMouse>yes</needMouse>
+        <version>1.0.0</version>
+        <icon_tv>.qtv/Jellyfin_HD_tv.png</icon_tv>
+        <icon_phone>.qtv/Jellyfin_HD_phone.png</icon_phone>
+        <icon_pad>.qtv/Jellyfin_HD_pad.png</icon_pad>
+</QTV>
